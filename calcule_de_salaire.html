@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Traitement Salaire</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='#'>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style: none;
+            outline: none;  
+        }
+        body{
+            background-color: black;
+            font-size: 14px;
+        }
+        .t{ 
+            background-color: white;
+            width: 50%;
+            margin: 10px auto;
+        }
+        .tt{
+            width: 100%;
+        }
+        .tt tr td input{
+            display: block;
+            width: 95%;
+            margin: auto;
+            padding: 5px 0px;
+        }
+        textarea{
+            display: block;
+            width: 98%;
+            padding: 2px 0px;
+            margin: auto;
+        }
+        .tt tr td{
+            padding: 5px 10px;
+        }
+
+        #blue{
+            border-radius: 20px 20px 20px 20px ;
+            border: none;
+            background-color: aqua;
+        }
+        #red{
+            border-radius: 20px 20px 20px 20px ;
+            border: none;
+            background-color: rgb(254, 106, 106);
+        }
+        #green{
+            border-radius: 20px 20px 20px 20px ;
+            border: none;
+            background-color: lime;
+        }
+        #orange{
+            border-radius: 20px 20px 20px 20px ;
+            border: none;
+            background-color: rgb(252, 176, 105);
+        }
+        #blue:hover{
+            background-color: blue;
+        }
+        #red:hover{
+            background-color: red;
+        }
+        #green:hover{
+            background-color: green;
+        }
+        #orange:hover{
+            background-color: rgb(255, 123, 0);
+        }
+
+    </style>
+</head>
+<body>
+        <table  border="1" class="t">
+            <tr>
+                <td><table class="tt">
+                    <tr>
+                        <td colspan="3" align="center"><B>SIMULATEUR POUR LE CALCULE DE SALAIRE NET</B></td>
+                    </tr>
+                    <tr><td colspan="3"><hr></td></tr>
+                    <tr>
+                        <td>Nom</td>
+                        <td colspan="2"><input id="nom" type="text"></td>  
+                    </tr>
+                    <tr>
+                        <td>Prenom</td>
+                        <td colspan="2"><input id="prenom" type="text"></td>            
+                    </tr>
+                    <tr>
+                        <td>Matricule</td>
+                        <td colspan="2"><input id="matricule" type="text"></td>            
+                    </tr>
+                    <tr>
+                        <td>Cin</td>
+                        <td colspan="2"><input id="cin" type="text"></td>            
+                    </tr>
+                    <tr>
+                        <td>Salaire De Base / J</td>
+                        <td><input id="nb_point" type="text"></td>
+                        <td><input type="text" id="t_area"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><input type="button" id="blue" onclick="calculer()" value="Calculer"></td>
+                    </tr>
+                    <tr>
+                        <td>Salaire Brut</td>
+                        <td><input type="text" id="s_brut"></td>
+                        <td><input type="text" id="t_area"></td>
+                    </tr>
+                    <tr>
+                        <td>Prime de résidence 13%</td>
+                        <td><input type="text" id="p_résidence"></td> 
+                        <td><input type="text" id="t_area"></td>
+                    </tr>
+                    <tr>
+                        <td>Retenue de retraite de 6%</td>
+                        <td><input type="text" id="R_retraite"></td>
+                        <td><input type="text" id="t_area"></td>
+                    </tr>
+                    <tr>
+                        <td>Retenue metuelle de 2.5%</td>
+                        <td><input type="text" id="R_metuelle"></td>
+                        <td><input type="text" id="t_area"></td>
+                    </tr>
+                    <tr>
+                        <td>Retenue Imot sur le revenu (IR)</td>
+                        <td><input type="text" id="R_imot"></td>
+                        <td><input type="text" id="t_area"></td>
+                    </tr>
+                    <tr>
+                        <td>Salaire NET</td>
+                        <td><input type="text" id="s_net"></td>
+                        <td><input type="text" id="t_area"></td>
+                    </tr>
+                </table></td>
+            </tr>
+            <tr>
+                <td><table class="tt">
+                    <tr>
+                        <td><input type="button" id="red"  onclick="Close()" value="Fermer"></td>
+                        <td><input type="button" id="orange" onclick="vider()"value="Vider"></td>
+                        <td><input type="button" id="green" onclick="imprimer()"value="Imprimer"></td>
+                    </tr>
+                </table></td>
+            </tr>
+        </table>
+    <script>
+        var nb_point = document.getElementById("nb_point");
+        var s_brut = document.getElementById("s_brut");
+        var p_résidence = document.getElementById("p_résidence");
+        var R_retraite = document.getElementById("R_retraite");
+        var R_metuelle = document.getElementById("R_metuelle");
+        var R_imot = document.getElementById("R_imot");
+        var s_net = document.getElementById("s_net");
+        var t_area = document.getElementById("t_area");
+        var nom = document.getElementById("nom");
+        var prenom = document.getElementById("prenom");
+        var matricule = document.getElementById("matricule");
+        var cin = document.getElementById("cin");
+
+        function calculer(){  
+            var res = 30 * nb_point.value;
+            if (isNaN(document.getElementById('nb_point').value)){ 
+                document.getElementById("t_area").value = "ERROR !.Saisier number_point ";
+            }
+            else{
+                document.getElementById("t_area").value = "Success"
+                s_brut.value= res.toFixed(2) ;
+                var residance = res * 0.13 ;
+                p_résidence.value= residance.toFixed(2);
+                var retrait = res * 0.06 ;
+                R_retraite.value= retrait.toFixed(2) ;
+                var metuell = res * 0.025;
+                R_metuelle.value= metuell.toFixed(2);
+                
+                if(res * 12 <= 28000){ ir = 0 }
+                else if(res*12 <= 40000){ ir= 3360 / 12 }
+                else if(res*12 <= 50000){ ir= 8160 / 12 }
+                else if(res*12 <= 60000){ ir= 13164 / 12 }
+                else if(res*12 <= 150000){ ir = 15564 / 12 }
+                else if(res*12 > 150000){ ir = 18564 / 12 }
+                R_imot.value = ir.toFixed(2) ;
+                s_net.value = res + residance - metuell - retrait - ir ;
+            }   
+        }
+        function imprimer(){
+            var nom = document.getElementById("nom").value;
+            var prenom = document.getElementById("prenom").value;
+            var matricule = document.getElementById("matricule").value;
+            var cin = document.getElementById("cin").value;
+            var res = 30 * nb_point.value;
+            s_brut.value= res.toFixed(2) ;
+            var residance = res * 0.13 ;
+            p_résidence.value= residance.toFixed(2);
+            var retrait = res * 0.06 ;
+            R_retraite.value= retrait.toFixed(2) ;
+            var metuell = res * 0.025;
+            R_metuelle.value= metuell.toFixed(2);
+            if(res * 12 <= 28000){ ir = 0 }
+            else if(res*12 <= 40000){ ir= 3360 / 12 }
+            else if(res*12 <= 50000){ ir= 8160 / 12 }
+            else if(res*12 <= 60000){ ir= 13164 / 12 }
+            else if(res*12 <= 150000){ ir = 15564 / 12 }
+            else if(res*12 > 150000){ ir = 18564 / 12 }
+            R_imot.value = ir.toFixed(2) ;
+            s_net.value = res + residance - metuell - retrait - ir ;
+            document.write("<table border='1' width='60%' height='400px' align='center'><tr><td><table width='100%' height='200px'>");
+            document.write("<tr><td colspan='3' align='center'><b>BULLETIN DE PAIE</b></td>")
+            document.write("</tr>")
+            document.write("<tr><td colspan='4'><hr></td></tr>")
+            document.write("<tr><td> Nom :</td><td>",nom,"</td><td></td><td></td></tr>");
+            document.write("<tr><td> Prenom :</td><td>",prenom,"</td><td></td><td></td></tr>");
+            document.write("<tr><td> Matricule :</td><td >",matricule,"</td><td></td><td></td></tr>");
+            document.write("<tr><td> Cin :</td><td>",cin,"</td><td></td><td></td></tr></table></td></tr>");
+            document.write("<tr><td><table width='100%' height='300px'><tr><td align='center'> Rubrique </td><td align='center'>Taux</td>");
+            document.write("<td align='center'>Gains (+)</td><td align='center'>Retenues (-)</td></tr>")
+            document.write("<tr><td colspan='4'><hr></td></tr>")
+            document.write("<tr><td> Salaire Brut </td><td align='center'> ",nb_point.value," DH x 30 Jour</td><td align='center'>",res.toFixed(2),"DH</td><td></td></tr>");
+            document.write("<tr><td> Prime de résidence </td><td align='center'> 13% </td><td align='center'>",residance.toFixed(2),"DH</td><td></td></tr>");
+            document.write("<tr><td> Retenue de retraite de </td><td align='center'> 6% </td><td></td><td align='center'>",retrait.toFixed(2),"DH</td></tr>");
+            document.write("<tr><td> Retenue metuelle de  </td><td align='center'> 2.5% </td><td></td><td align='center'>",metuell.toFixed(2),"DH</td></tr>");
+            document.write("<tr><td> Retenue Imot sur le revenu (IR) </td><td align='center'>T_IR</td><td></td><td align='center'>",ir.toFixed(2),"DH</td></tr>");
+            document.write("<tr><td colspan='4'><hr></td></tr>")
+            document.write("<tr><td colspan='2'> Total </td><td align='center'>",res + residance ,"DH</td><td align='center'>",metuell + retrait + ir," DH</td></tr>");
+            document.write("<tr><td colspan='4'><hr></td></tr>")
+            document.write("<tr><td colspan='2'> Salaire NET à Payer </td><td align='center'>Gains - Retenues</td><td align='center'>",s_net.value," DH</td></tr></table></td></tr></table>");
+            document.getElementById("aa").value = setTimeout(window.print(),1000);  
+        }
+        function vider(){
+            document.getElementById("nb_point").value="";
+            document.getElementById("s_brut").value="";
+            document.getElementById("p_résidence").value="";
+            document.getElementById("R_retraite").value="";
+            document.getElementById("R_metuelle").value="";
+            document.getElementById("R_imot").value="";
+            document.getElementById("s_net").value="";
+            document.getElementById("t_area").value="";
+            document.getElementById("nom").value="";
+            document.getElementById("prenom").value="";
+            document.getElementById("matricule").value="";
+            document.getElementById("cin").value="";
+        }
+        function reset(){
+            document.getElementById("aa").value = setTimeout(location.reload(),1000);
+        }
+        function Close(){
+            window.close();
+        }
+    </script>
+</body>
+</html>
