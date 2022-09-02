@@ -19,12 +19,15 @@
             font-size: 14px;
         }
         .t{ 
-            background-color: white;
-            width: 50%;
-            margin: 10px auto;
+            background-color: gainsboro;
+            width: 97%;
+            margin: 15px auto;
         }
         .tt{
             width: 100%;
+        }
+        td{
+            font-size: large;
         }
         .tt tr td input{
             display: block;
@@ -41,11 +44,13 @@
         .tt tr td{
             padding: 5px 10px;
         }
-
+        b{
+            font-size: x-large;
+        }
         #blue{
             border-radius: 20px 20px 20px 20px ;
             border: none;
-            background-color: aqua;
+            background-color: rgb(51, 131, 251);
         }
         #red{
             border-radius: 20px 20px 20px 20px ;
@@ -74,70 +79,73 @@
         #orange:hover{
             background-color: rgb(255, 123, 0);
         }
-
+        #nb_point,#Nb_jour,#t_area{
+            width: 84%;
+        }
     </style>
 </head>
 <body>
-        <table  border="1" class="t">
+        <table border="" class="t">
             <tr>
                 <td><table class="tt">
                     <tr>
+                        <td></td>
                         <td colspan="3" align="center"><B>SIMULATEUR POUR LE CALCULE DE SALAIRE NET</B></td>
                     </tr>
-                    <tr><td colspan="3"><hr></td></tr>
                     <tr>
                         <td>Nom</td>
-                        <td colspan="2"><input id="nom" type="text"></td>  
+                        <td colspan="3"><input id="nom" type="text"></td>  
                     </tr>
                     <tr>
                         <td>Prenom</td>
-                        <td colspan="2"><input id="prenom" type="text"></td>            
+                        <td colspan="3"><input id="prenom" type="text"></td>            
                     </tr>
                     <tr>
                         <td>Matricule</td>
-                        <td colspan="2"><input id="matricule" type="text"></td>            
+                        <td colspan="3"><input id="matricule" type="text"></td>            
                     </tr>
                     <tr>
                         <td>Cin</td>
-                        <td colspan="2"><input id="cin" type="text"></td>            
+                        <td colspan="3"><input id="cin" type="text"></td>            
                     </tr>
                     <tr>
                         <td>Salaire De Base / J</td>
-                        <td><input id="nb_point" type="text"></td>
+                        <td><input  type="text" id="nb_point" placeholder="Salaire De Base"></td>
+                        <td><input type="text" id="Nb_jour" placeholder="Nomber Des Jour"></td>
                         <td><input type="text" id="t_area"></td>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="button" id="blue" onclick="calculer()" value="Calculer"></td>
+                        <td colspan="4"><input type="button" id="blue" onclick="calculer()" value="Calculer"></td>
                     </tr>
                     <tr>
                         <td>Salaire Brut</td>
-                        <td><input type="text" id="s_brut"></td>
-                        <td><input type="text" id="t_area"></td>
+                        <td colspan="3"><input type="text" id="s_brut"></td>
+                        <!-- <td><input type="text" id="t_area"></td> -->
                     </tr>
                     <tr>
                         <td>Prime de résidence 13%</td>
-                        <td><input type="text" id="p_résidence"></td> 
-                        <td><input type="text" id="t_area"></td>
+                        <td colspan="3"><input type="text" id="p_résidence"></td> 
+                        <!-- <td><input type="text" id="t_area"></td> -->
                     </tr>
                     <tr>
                         <td>Retenue de retraite de 6%</td>
-                        <td><input type="text" id="R_retraite"></td>
-                        <td><input type="text" id="t_area"></td>
+                        <td colspan="3"><input type="text" id="R_retraite"></td>
+                        <!-- <td><input type="text" id="t_area"></td> -->
                     </tr>
                     <tr>
                         <td>Retenue metuelle de 2.5%</td>
-                        <td><input type="text" id="R_metuelle"></td>
-                        <td><input type="text" id="t_area"></td>
+                        <td colspan="3"><input type="text" id="R_metuelle"></td>
+                        <!-- <td><input type="text" id="t_area"></td> -->
                     </tr>
                     <tr>
                         <td>Retenue Imot sur le revenu (IR)</td>
-                        <td><input type="text" id="R_imot"></td>
-                        <td><input type="text" id="t_area"></td>
+                        <td colspan="3"><input type="text" id="R_imot"></td>
+                        <!-- <td><input type="text" id="t_area"></td> -->
                     </tr>
                     <tr>
                         <td>Salaire NET</td>
-                        <td><input type="text" id="s_net"></td>
-                        <td><input type="text" id="t_area"></td>
+                        <td colspan="3"><input type="text" id="s_net"></td>
+                        <!-- <td><input type="text" id="t_area"></td> -->
                     </tr>
                 </table></td>
             </tr>
@@ -153,6 +161,7 @@
         </table>
     <script>
         var nb_point = document.getElementById("nb_point");
+        var Nb_jour = document.getElementById("Nb_jour");
         var s_brut = document.getElementById("s_brut");
         var p_résidence = document.getElementById("p_résidence");
         var R_retraite = document.getElementById("R_retraite");
@@ -166,11 +175,19 @@
         var cin = document.getElementById("cin");
 
         function calculer(){  
-            var res = 30 * nb_point.value;
-            if (isNaN(document.getElementById('nb_point').value)){ 
-                document.getElementById("t_area").value = "ERROR !.Saisier number_point ";
-            }
-            else{
+
+            if (nb_point.value==0){ 
+                nb_point.style.border ="solid 2px red";
+                document.getElementById("t_area").value = "ERROR !";
+            }else{nb_point.style.border ="solid 2px lime";}
+
+            if (Nb_jour.value==0){ 
+                Nb_jour.style.border ="solid 2px red";
+                document.getElementById("t_area").value = "ERROR !";                   
+            }else{Nb_jour.style.border ="solid 2px lime";}
+
+            var res = Nb_jour.value * nb_point.value;
+            if(res!=0){
                 document.getElementById("t_area").value = "Success"
                 s_brut.value= res.toFixed(2) ;
                 var residance = res * 0.13 ;
@@ -195,7 +212,7 @@
             var prenom = document.getElementById("prenom").value;
             var matricule = document.getElementById("matricule").value;
             var cin = document.getElementById("cin").value;
-            var res = 30 * nb_point.value;
+            var res = Nb_jour.value * nb_point.value;
             s_brut.value= res.toFixed(2) ;
             var residance = res * 0.13 ;
             p_résidence.value= residance.toFixed(2);
@@ -211,7 +228,7 @@
             else if(res*12 > 150000){ ir = 18564 / 12 }
             R_imot.value = ir.toFixed(2) ;
             s_net.value = res + residance - metuell - retrait - ir ;
-            document.write("<table border='1' width='60%' height='400px' align='center'><tr><td><table width='100%' height='200px'>");
+            document.write("<table border='1' width='100%' height='400px' align='center'><tr><td><table width='100%' height='200px'>");
             document.write("<tr><td colspan='3' align='center'><b>BULLETIN DE PAIE</b></td>")
             document.write("</tr>")
             document.write("<tr><td colspan='4'><hr></td></tr>")
@@ -234,6 +251,9 @@
             document.getElementById("aa").value = setTimeout(window.print(),1000);  
         }
         function vider(){
+            Nb_jour.style.border ="";
+            nb_point.style.border ="";
+            document.getElementById("Nb_jour").value="";
             document.getElementById("nb_point").value="";
             document.getElementById("s_brut").value="";
             document.getElementById("p_résidence").value="";
@@ -247,9 +267,7 @@
             document.getElementById("matricule").value="";
             document.getElementById("cin").value="";
         }
-        function reset(){
-            document.getElementById("aa").value = setTimeout(location.reload(),1000);
-        }
+
         function Close(){
             window.close();
         }
